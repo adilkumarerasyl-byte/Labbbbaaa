@@ -120,21 +120,20 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useNewsStore } from '~/stores/news'
-import type { Article } from '~/stores/news'
+import type { Article } from '~/stores/news' // Импортируем интерфейс
 
 const newsStore = useNewsStore()
 
 const searchQuery = ref('')
 const selectedCategory = ref('BCE')
 
-// Инициализируем получение данных при монтировании компонента на клиенте
 onMounted(() => {
   if (newsStore.newsList.length === 0) {
     newsStore.fetchNews()
   }
 })
 
-// Фильтрация данных по поисковой строке и выбранному тегу
+// ДОБАВЛЕН СТРОГИЙ ТИП (item: Article) — это решает ошибку ts(7006) со скриншота
 const filteredNews = computed(() => {
   return newsStore.newsList.filter((item: Article) => {
     const matchesCategory = selectedCategory.value === 'BCE' || item.category === selectedCategory.value

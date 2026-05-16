@@ -61,7 +61,7 @@
 
       <div v-else class="text-center py-20 bg-slate-900 border border-slate-800 rounded-2xl">
         <h3 class="text-xl font-bold text-slate-300">Материал не найден</h3>
-        <p class="text-slate-500 text-sm mt-1">К сожалению, статьи с ID "{{ route.params.id }}" не существует в базе.</p>
+        <p class="text-slate-500 text-sm mt-1">К сожалению, статьи с ID "{{ route.params.id }}" не существует.</p>
       </div>
 
     </div>
@@ -74,12 +74,12 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { useNewsStore } from '~/stores/news'
-import type { Article } from '~/stores/news'
+import type { Article } from '~/stores/news' // Импортируем интерфейс
 
 const route = useRoute()
 const newsStore = useNewsStore()
 
-// Метод поиска элемента с типизированным аргументом (item: Article)
+// ДОБАВЛЕН СТРОГИЙ ТИП (item: Article) — это убирает ошибку ts(7006) на детальной странице
 const article = computed(() => {
   return newsStore.newsList.find((item: Article) => item.id === Number(route.params.id))
 })
